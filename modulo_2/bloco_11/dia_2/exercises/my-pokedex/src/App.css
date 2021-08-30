@@ -1,0 +1,27 @@
+body {
+  background-color: rgb(191, 73, 71);
+}
+
+.App {
+  text-align: center;
+}
+
+.App > h1 {
+  color: aliceblue;
+}
+
+.pokedex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  background-color: rgb(255, 89, 95);
+  padding: 20px;
+}
+
+.pokemon-container {
+  width: 200px;
+  background-color: bisque;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 25px;
+}
