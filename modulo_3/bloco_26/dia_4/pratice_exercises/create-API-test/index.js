@@ -1,11 +1,24 @@
 const express = require('express');
 const app = express();
 
+// Receitas
+
 const recipes = [
   { id: 1, name: 'Lasanha', price: 40.0, waitTime: 30 },
   { id: 2, name: 'Macarrão a Bolonhesa', price: 35.0, waitTime: 25 },
-  { id: 3, name: 'Macarrão com molho branco', price: 35.0, waitTime: 25 },
+  { id: 3, name: 'Macarrão com molho branco', price: 25.0, waitTime: 25 },
 ];
+
+// Query String com três parâmetros
+
+app.get('/recipes/search', function (req, res) {
+  const { name, maxPrice, minPrice } = req.query;
+  const filteredRecipes = recipes.filter((r) => r.name.includes(name) && r.price < parseInt(maxPrice) && r.price >= parseInt(minPrice));
+
+  res.status(200).json(filteredRecipes);
+})
+
+// Roteamento com parâmetro de rota
 
 app.get('/recipes/:id', function (req, res) {
   const { id } = req.params;
@@ -24,6 +37,8 @@ app.get('/recipes', function (req, res) {
   }));
 });
 
+// Drinks
+
 const drinks = [
   { id: 1, name: 'Refrigerante Lata', price: 5.0 },
   { id: 2, name: 'Refrigerante 600ml', price: 8.0 },
@@ -32,6 +47,17 @@ const drinks = [
   { id: 5, name: 'Cerveja Lata', price: 4.5 },
   { id: 6, name: 'Água Mineral 500 ml', price: 5.0 },
 ];
+
+// Query String com um parâmetro de busca
+
+app.get('/drinks/search', function (req, res) {
+  const { name } = req.query;
+  const filteredDrinks = drinks.filter((r) => r.name.includes(name));
+
+  res.status(200).json(filteredDrinks);
+})
+
+// Roteamento com parâmetro de rota
 
 app.get('/drinks/:id', function (req, res) {
   const { id } = req.params;
