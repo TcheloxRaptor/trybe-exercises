@@ -1,5 +1,8 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+
 const app = express();
+app.use(bodyParser.json());
 
 // Receitas
 
@@ -35,6 +38,16 @@ app.get('/recipes', function (req, res) {
     if (elementA.name < elementB.name) return -1;
     else return 0;
   }));
+});
+
+// Rota com o método Post
+
+app.post('/recipes', function (req, res) {
+  const { id, name, price, waitTime } = req.body;
+
+  recipes.push({ id, name, price, waitTime });
+
+  res.status(201).json({ message: 'Recipe created successfully' });
 });
 
 // Drinks
@@ -74,6 +87,16 @@ app.get('/drinks', function (req, res) {
     if (elementA.name < elementB.name) return -1;
     else return 0;
   }));
+});
+
+// Rota com o método Post
+
+app.post('/drinks', function (req, res) {
+  const { id, name, price } = req.body;
+
+  drinks.push({ id, name, price });
+
+  res.status(201).json({ message: 'Drink created successfully' });
 });
 
 app.listen(3001, () => {
