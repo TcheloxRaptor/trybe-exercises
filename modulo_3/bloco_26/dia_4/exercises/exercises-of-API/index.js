@@ -34,6 +34,16 @@ app.post('/greetings', function (req, res) {
 
 // -----------------------------
 
+// 4 - Crie uma rota PUT /users/:name/:age
+
+app.put('/users/:name/:age', function (req, res) {
+  const { name, age } = req.params;
+
+  res.status(200).json({ message: `Seu nome é ${name} e você tem ${age} anos de idade`});
+});
+
+// -----------------------------
+
 app.listen(3001, () => {
   console.log('Aplicação ouvindo a porta 3001 http://localhost:3001');
 });
