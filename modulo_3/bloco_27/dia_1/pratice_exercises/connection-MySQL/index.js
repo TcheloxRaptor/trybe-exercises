@@ -4,6 +4,8 @@ const Author = require('./models/Author');
 
 const app = express();
 
+// Books Routes
+
 app.get('/books', async (_req, res) => {
   const books = await Book.getAll();
 
@@ -16,6 +18,17 @@ app.get('/books/search', async (req, res) => {
 
   res.status(200).json(books);
 });
+
+app.get('/books/:id', async (req, res) => {
+  const { id } = req.params;
+  const book = await Book.getBookById(id);
+
+  if(!book) return res.status(404).json({message: 'Not found'});
+
+  res.status(200).json(book);
+});
+
+// Authors Routes
 
 app.get('/authors', async (_req, res) => {
   const authors = await Author.getAll();
