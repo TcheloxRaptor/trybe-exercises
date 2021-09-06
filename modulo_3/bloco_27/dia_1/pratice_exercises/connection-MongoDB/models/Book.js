@@ -2,13 +2,6 @@ const connection = require('./connection');
 const { ObjectId } = require('mongodb');
 const Author = require('./Author');
 
-
-const serialize = (bookData) => ({
-  id: bookData.id,
-  title: bookData.title,
-  authorId: bookData.author_id,
-});
-
 const getAll = async () => {
   return connection()
     .then((db) => db.collection('books').find({}).toArray());
@@ -33,21 +26,21 @@ const getBookById = async (id) => {
 };
 
 const titleIsValid = (title) => {
-  if(!title || typeof title !== 'string' || title.length < 3) return false;
+  if (!title || typeof title !== 'string') return false;
 
   return true;
 };
 
 const authorIdIsValid = async (authorId) => {
-  if(!authorId || typeof authorId !== 'number' || !(await Author.findById(authorId))) return false;
+  // Aqui a única alteração é que `authorId` deve ser uma string de 24 caracteres, e não mais um número
+  if (!authorId || typeof authorId !== 'string' || authorId.length !== 24 || !(await Author.findById(authorId))) return false;
 
   return true;
 };
 
-const create = async (title, authorId) => connection.execute(
-  'INSERT INTO model_example.books (title, author_id) VALUES (?,?)',
-  [title, authorId],
-);
+const create = async (title, authorId) => 
+  connection()
+    .then((db) => db.collection('books').insertOne({ title, authorId }));
 
 module.exports = { 
   getAll,
