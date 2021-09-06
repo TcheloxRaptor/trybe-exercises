@@ -31,10 +31,18 @@ const serialize = (authorData) => ({
 // Busca todos os autores do banco.
 
 const getAll = async () => {
-    const [authors] = await connection.execute(
-        'SELECT id, first_name, middle_name, last_name FROM model_example.authors;',
-    );
-    return authors.map(serialize).map(getNewAuthor);
+  return connection()
+      .then((db) => db.collection('authors').find().toArray())
+          .then((authors) =>
+              authors.map(({ _id, firstName, middleName, lastName }) =>
+              getNewAuthor({
+                  id: _id,
+                  firstName,
+                  middleName,
+                  lastName,
+              })
+          )
+      );
 };
 
 /*
