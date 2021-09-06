@@ -15,6 +15,21 @@ app.get('/books', async (_req, res) => {
   res.status(200).json(books);
 });
 
+app.post('/books', async (req, res) => {
+  const { title, author_id } = req.body;
+
+  if (!Book.titleIsValid(title)) {
+      return res.status(400).json({ message: 'Dados inválidos' });
+  }
+  if (!await Book.authorIdIsValid(author_id)) {
+    return res.status(400).json({ message: 'Dados inválidos' });
+}
+
+  await Book.create(title, author_id);
+
+  res.status(201).json({ message: 'Livro criado com sucesso!'});
+});
+
 app.get('/books/search', async (req, res) => {
   const { author_id } = req.query;
   const books = await Book.getByAuthorId(author_id);
