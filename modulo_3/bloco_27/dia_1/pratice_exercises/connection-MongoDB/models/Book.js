@@ -8,20 +8,13 @@ const serialize = (bookData) => ({
 });
 
 const getAll = async () => {
-  const [books] = await connection.execute(
-    'SELECT id, title, author_id FROM model_example.books',
-  );
-
-  return books.map(serialize);
-}
+  return connection()
+    .then((db) => db.collection('books').find({}).toArray());
+};
 
 const getByAuthorId = async (authorId) => {
-  const [books] = await connection.execute(
-    'SELECT id, title, author_id FROM model_example.books ' +
-    'WHERE author_id=?;', [authorId]
-  );
-
-  return books.map(serialize);
+  return connection()
+    .then((db) => db.collection('books').find({ author_id: Number(authorId) }).toArray());
 }
 
 const getBookById = async (id) => {
