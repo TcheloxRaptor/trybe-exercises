@@ -1,7 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+
 const Book = require('./models/Book');
 const Author = require('./models/Author');
+const User = require('./models/User');
 
 const app = express();
 
@@ -75,6 +77,20 @@ app.post('/authors', async (req, res) => {
   await Author.create(first_name, middle_name, last_name);
 
   res.status(201).json({ message: 'Autor criado com sucesso! '});
+});
+
+// User Routes
+
+app.post('/user', async (req, res) => {
+  const { firstName, lastName, email, password } = req.body;
+
+  if (!User.passwordIsValid(password)) {
+    return res.status(400).json({ erro: true, message: 'O campo "password" deve ter pelo menos 6 caracteres' })
+  }
+
+  if (!User.isValid(firstName, lastName, email)) {
+    return res.status(400).json({ erro: true, message: '' })
+  }
 });
 
 const PORT = process.env.PORT || 3000;

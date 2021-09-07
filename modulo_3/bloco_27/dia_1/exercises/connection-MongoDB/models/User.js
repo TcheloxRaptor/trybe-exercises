@@ -16,7 +16,8 @@ const isValid = (checkValue) => {
 
 const create = async (firstName, lastName, email, password)  =>
   await connection()
-    .then((db) => db.collection('user').insertOne({ firstName, lastName, email, password }));
+    .then((db) => db.collection('user').insertOne({ firstName, lastName, email, password }))
+    .then(result => ({ id: result.insertedId, firstName, middleName, lastName }));
 
 module.exports = {
   create,
