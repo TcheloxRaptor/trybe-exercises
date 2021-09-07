@@ -6,8 +6,8 @@ const passwordIsValid = (password) => {
   return true;
 };
 
-const isValid = (firstName, lastName, email, password) => {
-  if (!firstName || !lastName || !email || passwordIsValid(password) === false) {
+const isValid = (checkValue) => {
+  if (!checkValue) {
     return false;
   }
 
@@ -20,4 +20,6 @@ const create = async (firstName, lastName, email, password)  =>
 
 module.exports = {
   create,
+  isValid,
+  passwordIsValid,
 }
