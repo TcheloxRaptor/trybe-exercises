@@ -1,6 +1,6 @@
 const { MongoClient } = require('mongodb');
 
-const MONGO_DB_URL = 'mongodb://localhost:27017'; // ou coloque sua URL do MongoDB aqui
+const MONGO_DB_URL = 'mongodb://127.0.0.1:27017'; //'mongodb://localhost:27017'; // ou coloque sua URL do MongoDB aqui
 
 let schema = null;
 
@@ -22,3 +22,9 @@ async function connection() {
 };
 
 module.exports = connection;
+
+/*
+Nota : Após clonar o projeto, não se esqueça de colocar o endereço do MongoDB no arquivo models/connection.js , na linha 3. 
+O endereço da sua instância local do MongoDB ficará disponível assim que você executar o mongo no seu terminal. 
+Normalmente, esse endereço é mongodb://127.0.0.1:27017 .  
+*/
