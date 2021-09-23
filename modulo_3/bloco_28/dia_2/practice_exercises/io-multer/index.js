@@ -37,6 +37,10 @@ app.use(express.static(path.join(__dirname, '..', '/uploads')));
    nesse caso, contém o destino do arquivo enviado. */
 const upload = multer({ dest: 'uploads' });
 
+app.post('/files/upload', upload.single('file'), (req, res) => (
+  res.status(200).json({ body: req.body, file: req.file })
+));
+
 app.get('/ping', controllers.ping);
 
 app.use(middlewares.error);
